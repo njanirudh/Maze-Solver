@@ -41,11 +41,11 @@ def find_start(input):
 
     for i,row in enumerate(input):
         for j,value in enumerate(row):
-            if(value == "s"):
-                start_x = i
-                start_y = j
+            if(value.data == "s"):
+                return input[i][j]
 
-    return Node(start_x,start_y)
+    return Node(-1,-1)
+
 
 
 # def pretty_print_maze(text):
@@ -96,9 +96,10 @@ if __name__ == "__main__":
 
     file_path = "maps/map1.txt"
     maze_array = create_maze_array(file_path)
-    pretty_print_maze(maze_array)
+    #pretty_print_maze(maze_array)
 
     start_pnt = find_start(maze_array)
+    print(start_pnt)
     #run_bfs_on_maze(maze_array,start_pnt)
 
     #print(maze_array[1][0])
