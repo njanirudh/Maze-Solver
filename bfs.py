@@ -20,11 +20,11 @@ def create_maze_array(path):
     maze_array = [i.strip() for i in text]
 
     node_maze = []
-    for i, row in enumerate(maze_array):
+    for row_count, row in enumerate(maze_array):
         inner_val = []
-        for j, value in enumerate(row):
-            new_node = Node(i,j)
-            new_node.data = maze_array[i][j]
+        for column_count, value in enumerate(row):
+            new_node = Node(column_count,row_count)
+            new_node.data = maze_array[row_count][column_count]
             inner_val.append(new_node)
         node_maze.append(inner_val)
 
@@ -36,13 +36,11 @@ def find_start(input):
     :param input:
     :return:
     '''
-    start_x = 0
-    start_y = 0
 
     for i,row in enumerate(input):
         for j,value in enumerate(row):
             if(value.data == "s"):
-                return input[i][j]
+                return input[j][i]
 
     return Node(-1,-1)
 
@@ -69,27 +67,31 @@ def run_bfs_on_maze(maze,start_pnt):
         current_node.visited = True
         print(current_node)
 
-        right_node = Node(current_node.x + 1 , current_node.y)
-        left_node = Node(current_node.x - 1 , current_node.y)
-        up_node = Node(current_node.x , current_node.y + 1)
-        down_node = Node(current_node.x , current_node.y - 1)
+        right_node = maze[current_node.x + 1 ][ current_node.y]
+        left_node = maze[current_node.x - 1 ][ current_node.y]
+        up_node = maze[current_node.x ][ current_node.y - 1]
+        down_node = maze[current_node.x ][ current_node.y + 1]
 
-        right_node_value = maze[right_node.x][right_node.y]
-        left_node_value  = maze[left_node.x][left_node.y]
-        up_node_value    = maze[up_node.x][up_node.y]
-        down_node_value  = maze[down_node.x][down_node.y]
+        right_node_value = right_node.data
+        left_node_value  = left_node.data
+        up_node_value    = up_node.data
+        down_node_value  = down_node.data
 
         if right_node_value != "=" or right_node_value != "|" :
-            frontier_queue.append(right_node)
+            if not right_node.visited:
+                frontier_queue.append(right_node)
 
         if left_node_value != "=" or left_node_value != "|":
-            frontier_queue.append(left_node)
+            if not left_node.visited:
+                frontier_queue.append(left_node)
 
         if up_node_value != "=" or up_node_value != "|":
-            frontier_queue.append(up_node)
+            if not up_node.visited:
+                frontier_queue.append(up_node)
 
         if down_node_value != "=" or down_node_value != "|":
-            frontier_queue.append(down_node)
+            if not down_node.visited:
+                frontier_queue.append(down_node)
 
 
 if __name__ == "__main__":
@@ -99,8 +101,8 @@ if __name__ == "__main__":
     #pretty_print_maze(maze_array)
 
     start_pnt = find_start(maze_array)
-    print(start_pnt)
-    #run_bfs_on_maze(maze_array,start_pnt)
+    #print(start_pnt)
+    run_bfs_on_maze(maze_array,start_pnt)
 
     #print(maze_array[1][0])
 
