@@ -1,4 +1,5 @@
 from collections import deque
+from time import sleep
 
 class Node :
     def __init__(self,in_x=0,in_y=0):
@@ -46,11 +47,6 @@ def find_start(input):
     return Node(-1,-1)
 
 
-
-# def pretty_print_maze(text):
-#     for arr in text:
-#         print(arr)
-
 def pretty_print_maze(node_matrix):
 
     for node_array in node_matrix:
@@ -59,21 +55,27 @@ def pretty_print_maze(node_matrix):
         print()
 
 
-
 def run_bfs_on_maze(maze,start_pnt):
 
     frontier_queue = deque()
     frontier_queue.append(start_pnt)
 
+    count = 0
+
     while len(frontier_queue) != 0 :
         current_node = frontier_queue.popleft()
         current_node.visited = True
+        current_node.data = "X"
+        maze_array[current_node.y][current_node.x]=current_node
+
+        print(current_node)
+        print(len(frontier_queue))
 
         if(current_node.x != (len(maze[0]))):
             right_node = maze[ current_node.y][current_node.x + 1 ]
             right_node_value = right_node.data
 
-            if right_node_value != "=" or right_node_value != "|":
+            if right_node_value != "=" and right_node_value != "|":
                 if right_node.visited is False:
                     frontier_queue.append(right_node)
 
@@ -81,7 +83,7 @@ def run_bfs_on_maze(maze,start_pnt):
             left_node = maze[ current_node.y][current_node.x - 1 ]
             left_node_value = left_node.data
 
-            if left_node_value != "=" or left_node_value != "|":
+            if left_node_value != "=" and left_node_value != "|":
                 if left_node.visited is False:
                     frontier_queue.append(left_node)
 
@@ -89,7 +91,7 @@ def run_bfs_on_maze(maze,start_pnt):
             up_node = maze[ current_node.y - 1][current_node.x ]
             up_node_value = up_node.data
 
-            if up_node_value != "=" or up_node_value != "|":
+            if up_node_value != "=" and up_node_value != "|":
                 if up_node.visited is False:
                     frontier_queue.append(up_node)
 
@@ -97,20 +99,25 @@ def run_bfs_on_maze(maze,start_pnt):
             down_node = maze[ current_node.y + 1][current_node.x ]
             down_node_value  = down_node.data
 
-            if down_node_value != "=" or down_node_value != "|":
+            if down_node_value != "=" and down_node_value != "|":
                 if down_node.visited is False:
                     frontier_queue.append(down_node)
+        if(count == 10000000):
+            break
+
+        count += 1
+    return maze_array
+
 
 
 if __name__ == "__main__":
 
     file_path = "maps/map1.txt"
     maze_array = create_maze_array(file_path)
-    pretty_print_maze(maze_array)
+    #pretty_print_maze(maze_array)
 
     start_pnt = find_start(maze_array)
-    #print(start_pnt)
-    #run_bfs_on_maze(maze_array,start_pnt)
+    mz_bfs = run_bfs_on_maze(maze_array,start_pnt)
+    pretty_print_maze(maze_array)
 
-    #print(maze_array[1][0])
 
