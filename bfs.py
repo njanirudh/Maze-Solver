@@ -8,7 +8,8 @@ class Node :
          self.visited = False
 
     def __str__(self):
-        return str((self.x,self.y,self.data))
+        #return str((self.x,self.y,self.data))
+        return str(self.data)
 
 
 def create_maze_array(path):
@@ -54,7 +55,9 @@ def pretty_print_maze(node_matrix):
 
     for node_array in node_matrix:
         for node in node_array:
-            print(node)
+            print(node,end = "")
+        print()
+
 
 
 def run_bfs_on_maze(maze,start_pnt):
@@ -65,9 +68,8 @@ def run_bfs_on_maze(maze,start_pnt):
     while len(frontier_queue) != 0 :
         current_node = frontier_queue.popleft()
         current_node.visited = True
-        print(current_node)
 
-        if(current_node.x != len(maze[0])):
+        if(current_node.x != (len(maze[0]))):
             right_node = maze[ current_node.y][current_node.x + 1 ]
             right_node_value = right_node.data
 
@@ -91,7 +93,7 @@ def run_bfs_on_maze(maze,start_pnt):
                 if up_node.visited is False:
                     frontier_queue.append(up_node)
 
-        if(current_node.y != len(maze)):
+        if(current_node.y != (len(maze)-1)):
             down_node = maze[ current_node.y + 1][current_node.x ]
             down_node_value  = down_node.data
 
@@ -104,11 +106,11 @@ if __name__ == "__main__":
 
     file_path = "maps/map1.txt"
     maze_array = create_maze_array(file_path)
-    #pretty_print_maze(maze_array)
+    pretty_print_maze(maze_array)
 
     start_pnt = find_start(maze_array)
     #print(start_pnt)
-    run_bfs_on_maze(maze_array,start_pnt)
+    #run_bfs_on_maze(maze_array,start_pnt)
 
     #print(maze_array[1][0])
 
