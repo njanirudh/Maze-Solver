@@ -40,7 +40,7 @@ def find_start(input):
     for i,row in enumerate(input):
         for j,value in enumerate(row):
             if(value.data == "s"):
-                return input[j][i]
+                return input[i][j]
 
     return Node(-1,-1)
 
@@ -67,31 +67,37 @@ def run_bfs_on_maze(maze,start_pnt):
         current_node.visited = True
         print(current_node)
 
-        right_node = maze[current_node.x + 1 ][ current_node.y]
-        left_node = maze[current_node.x - 1 ][ current_node.y]
-        up_node = maze[current_node.x ][ current_node.y - 1]
-        down_node = maze[current_node.x ][ current_node.y + 1]
+        if(current_node.x != len(maze[0])):
+            right_node = maze[ current_node.y][current_node.x + 1 ]
+            right_node_value = right_node.data
 
-        right_node_value = right_node.data
-        left_node_value  = left_node.data
-        up_node_value    = up_node.data
-        down_node_value  = down_node.data
+            if right_node_value != "=" or right_node_value != "|":
+                if right_node.visited is False:
+                    frontier_queue.append(right_node)
 
-        if right_node_value != "=" or right_node_value != "|" :
-            if not right_node.visited:
-                frontier_queue.append(right_node)
+        if(current_node.x != 0):
+            left_node = maze[ current_node.y][current_node.x - 1 ]
+            left_node_value = left_node.data
 
-        if left_node_value != "=" or left_node_value != "|":
-            if not left_node.visited:
-                frontier_queue.append(left_node)
+            if left_node_value != "=" or left_node_value != "|":
+                if left_node.visited is False:
+                    frontier_queue.append(left_node)
 
-        if up_node_value != "=" or up_node_value != "|":
-            if not up_node.visited:
-                frontier_queue.append(up_node)
+        if (current_node.y != 0):
+            up_node = maze[ current_node.y - 1][current_node.x ]
+            up_node_value = up_node.data
 
-        if down_node_value != "=" or down_node_value != "|":
-            if not down_node.visited:
-                frontier_queue.append(down_node)
+            if up_node_value != "=" or up_node_value != "|":
+                if up_node.visited is False:
+                    frontier_queue.append(up_node)
+
+        if(current_node.y != len(maze)):
+            down_node = maze[ current_node.y + 1][current_node.x ]
+            down_node_value  = down_node.data
+
+            if down_node_value != "=" or down_node_value != "|":
+                if down_node.visited is False:
+                    frontier_queue.append(down_node)
 
 
 if __name__ == "__main__":
