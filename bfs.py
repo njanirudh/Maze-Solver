@@ -51,6 +51,31 @@ def find_start(input):
 
     return Node(-1,-1)
 
+def get_symbol(r,l,u,d):
+
+    input_str = ""
+    input_str += "T" if r == True else "F"
+    input_str += "T" if l == True else "F"
+    input_str += "T" if u == True else "F"
+    input_str += "T" if d == True else "F"
+
+    symbol_map = {"TTTT": '\u253c',
+                  "FFTT": '\u2502',
+                  "TTFF": '\u2500',
+                  "TTTF": '\u2534',
+                  "TTFT": '\u252c',
+                  "TFTT": '\u251c',
+                  "FTTT": '\u2524',
+                  "TFFT": '\u250c',
+                  "FTFT": '\u2510',
+                  "TFTF": '\u2514',
+                  "FTTF": '\u2518',
+                  "FTFF": '\u2574',
+                  "FFTF": '\u2575',
+                  "TFFF": '\u2576',
+                  "FFFT": '\u2577'}
+
+    return symbol_map[input_str]
 
 def pretty_print_maze(node_matrix):
 
@@ -68,9 +93,14 @@ def run_bfs_on_maze(maze,start_pnt):
     while(frontier_queue):
         current_node = frontier_queue.get()
         current_node.visited = True
-        current_node.data = "X"
+        current_node.data = ""
 
         maze_array[current_node.y][current_node.x]=current_node
+
+        right_node = None
+        left_node = None
+        up_node = None
+        down_node = None
 
         if(current_node.x != (len(maze[0]))):
             right_node = maze[ current_node.y][current_node.x + 1 ]
@@ -108,6 +138,11 @@ def run_bfs_on_maze(maze,start_pnt):
                     down_node.visited = True
                     frontier_queue.put(down_node)
 
+        current_node.data = str(get_symbol(right_node.visited,
+                                           left_node.visited,
+                                           up_node.visited,
+                                           down_node.visited))
+        maze_array[current_node.y][current_node.x]=current_node
 
         pretty_print_maze(maze_array)
 
