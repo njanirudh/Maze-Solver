@@ -65,8 +65,6 @@ def run_bfs_on_maze(maze,start_pnt):
     frontier_queue = queue.Queue()
     frontier_queue.put(start_pnt)
 
-    count = 0
-
     while(frontier_queue):
         current_node = frontier_queue.get()
         current_node.visited = True
