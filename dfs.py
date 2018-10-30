@@ -61,7 +61,7 @@ def pretty_print_maze(node_matrix):
 
 def get_symbol(r,l,u,d):
 
-    input_str = str
+    input_str = ""
     input_str += "T" if r == True else "F"
     input_str += "T" if l == True else "F"
     input_str += "T" if u == True else "F"
@@ -90,10 +90,14 @@ def run_dfs_on_maze(maze,start_pnt):
 
     current_node = start_pnt
     current_node.visited = True
-    current_node.data = "X" #str(get_symbol(True,True,True,True))
-    pretty_print_maze(maze_array)
-    sleep(0.2)
+    current_node.data = ""
+
     maze_array[current_node.y][current_node.x] = current_node
+
+    right_node = None
+    left_node  = None
+    up_node  = None
+    down_node  = None
 
     if (current_node.x != (len(maze[0]))):
         right_node = maze[current_node.y][current_node.x + 1]
@@ -130,6 +134,14 @@ def run_dfs_on_maze(maze,start_pnt):
             if down_node.added is False and down_node.visited is False:
                 down_node.visited = True
                 run_dfs_on_maze(maze, down_node)
+
+    current_node.data = str(get_symbol(right_node.visited,
+                                       left_node.visited,
+                                       up_node.visited,
+                                       down_node.visited))
+    maze_array[current_node.y][current_node.x] = current_node
+
+    pretty_print_maze(maze_array)
 
 
 
