@@ -1,17 +1,16 @@
-#!/usr/bin/sudo python
-
-from collections import deque
-from time import sleep
-import keyboard
 import queue
+from time import sleep
 
 class Node :
     def __init__(self,in_x=0,in_y=0):
-         self.x = in_x
-         self.y = in_y
-         self.data = None
-         self.visited = False
-         self.added = False
+        self.x = in_x
+        self.y = in_y
+        self.data = None
+
+        self.visited = False
+        self.added = False
+
+        self.parent = None
 
     def __str__(self):
         #return str((self.x,self.y,self.data))
@@ -59,7 +58,7 @@ def get_symbol(r,l,u,d):
     input_str += "T" if u == True else "F"
     input_str += "T" if d == True else "F"
 
-    symbol_map = {"TTTT": '\u253c',
+    symbol_map = {"FFFF": '\u253c',
                   "FFTT": '\u2502',
                   "TTFF": '\u2500',
                   "TTTF": '\u2534',
@@ -93,6 +92,7 @@ def run_bfs_on_maze(maze,start_pnt):
     while(frontier_queue):
         current_node = frontier_queue.get()
         current_node.visited = True
+        current_node.added = True
         current_node.data = ""
 
         maze_array[current_node.y][current_node.x]=current_node
@@ -108,7 +108,7 @@ def run_bfs_on_maze(maze,start_pnt):
 
             if right_node_value != "=" and right_node_value != "|":
                 if right_node.added is False and right_node.visited is False:
-                    right_node.visited = True
+                    right_node.added = True
                     frontier_queue.put(right_node)
 
         if(current_node.x != 0):
@@ -117,7 +117,7 @@ def run_bfs_on_maze(maze,start_pnt):
 
             if left_node_value != "=" and left_node_value != "|":
                 if left_node.added is False and left_node.visited is False:
-                    left_node.visited = True
+                    left_node.added = True
                     frontier_queue.put(left_node)
 
         if (current_node.y != 0):
@@ -126,7 +126,7 @@ def run_bfs_on_maze(maze,start_pnt):
 
             if up_node_value != "=" and up_node_value != "|":
                 if up_node.added is False and up_node.visited is False:
-                    up_node.visited = True
+                    up_node.added = True
                     frontier_queue.put(up_node)
 
         if(current_node.y != (len(maze)-1)):
@@ -135,15 +135,16 @@ def run_bfs_on_maze(maze,start_pnt):
 
             if down_node_value != "=" and down_node_value != "|":
                 if down_node.added is False  and down_node.visited is False:
-                    down_node.visited = True
+                    down_node.added = True
                     frontier_queue.put(down_node)
 
         current_node.data = str(get_symbol(right_node.visited,
                                            left_node.visited,
                                            up_node.visited,
                                            down_node.visited))
-        maze_array[current_node.y][current_node.x]=current_node
 
+        maze_array[current_node.y][current_node.x]=current_node
+        sleep(0.1)
         pretty_print_maze(maze_array)
 
     return maze_array
