@@ -1,33 +1,53 @@
 from graph import Graph
 from time import sleep
+import os
+
+def clear():
+    os.system( 'cls' )
+
 
 def run_iddfs_on_maze(maze_obj,start_pnt):
 
-    depth = 1
-    while True:
-        depth_limited_search(maze_obj, start_pnt, depth)
-        depth += 1
+    result = 0
+    max_depth = 0
 
-def depth_limited_search(maze_obj,start_pnt , max_height = 0):
+    while result != 2 :
+        result = depth_limited_search(maze_obj, start_pnt, max_depth)
+        max_depth += 1
+        clear()
+        sleep(1)
+
+
+def depth_limited_search(maze_obj,start_pnt , max_depth = 0):
 
     frontier_stack = []
     frontier_stack.append(start_pnt)
 
     maze_array = maze_obj.get_maze_array()
-    result_maze_array = maze_obj.get_maze_array()
+    result_maze_obj = maze_obj
+    result_maze_array = result_maze_obj.get_maze_array()
 
+    current_depth = 0
     while (frontier_stack):
+
         current_node = frontier_stack.pop()
         current_node.visited = True
         current_node.added = True
-        current_node.data = ""
+        current_node.data = "X"
 
         result_maze_array[current_node.y][current_node.x] = current_node
+
+        result_maze_obj.pretty_print_maze()
+        sleep(0.1)
+
+        if(current_depth == max_depth):
+            return result_maze_obj
 
         right_node = None
         left_node = None
         up_node = None
         down_node = None
+
 
         if (current_node.x != (len(maze_array[0]))):
             right_node = maze_array[current_node.y][current_node.x + 1]
@@ -65,16 +85,14 @@ def depth_limited_search(maze_obj,start_pnt , max_height = 0):
                     down_node.added = True
                     frontier_stack.append(down_node)
 
-        current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
-                                                              left_node.visited,
-                                                              up_node.visited,
-                                                              down_node.visited))
+        # current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
+        #                                                       left_node.visited,
+        #                                                       up_node.visited,
+        #                                                       down_node.visited))
 
         result_maze_array[current_node.y][current_node.x] = current_node
-        Graph(result_maze_array).pretty_print_maze()
-        sleep(0.2)
+        current_depth += 1
 
-    return result_maze_array
 
 
 if __name__ == "__main__":
@@ -84,4 +102,4 @@ if __name__ == "__main__":
     maze.create_maze_array(file_path)
 
     start_pnt = maze.get_start()
-    mz_bfs = depth_limited_search(maze, start_pnt)
+    run_iddfs_on_maze(maze, start_pnt)
