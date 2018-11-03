@@ -78,7 +78,7 @@ if __name__ == "__main__":
     maze.create_maze_array(file_path)
 
     start_pnt = maze.get_start()
-    mz_bfs = run_bfs_on_maze(maze,start_pnt)
+    run_bfs_on_maze(maze,start_pnt)
 
 
 
