@@ -11,7 +11,6 @@ def run_iddfs_on_maze(maze_obj,start_pnt):
         maze_test = copy.deepcopy(maze)
         result = depth_limited_search(maze_test, start_pnt, max_depth)
         result.pretty_print_maze()
-        #sleep(5)
         max_depth += 1
 
 def depth_limited_search(maze_obj,start_pnt , max_depth):

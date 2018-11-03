@@ -1,11 +1,14 @@
-import queue
 from graph import Graph
 from time import sleep
 
-"""
-"""
 def run_dfs_on_maze(maze_obj,start_pnt,result_maze_obj):
+    """
 
+    :param maze_obj:
+    :param start_pnt:
+    :param result_maze_obj:
+    :return:
+    """
     current_node = start_pnt
     current_node.visited = True
 

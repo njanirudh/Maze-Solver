@@ -2,7 +2,6 @@ import queue
 from graph import Graph
 from time import sleep
 
-
 def run_bfs_on_maze(maze_obj,start_pnt):
 
     frontier_queue = queue.Queue()
@@ -85,13 +84,14 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                                            down_node.visited))
 
         result_maze_array[current_node.y][current_node.x]=current_node
+        result_maze_obj.pretty_print_maze()
 
     return result_maze_obj
 
 
 if __name__ == "__main__":
 
-    file_path = "maps/map3.txt"
+    file_path = "maps/map1.txt"
 
     maze = Graph()
     maze.create_maze_array(file_path)
@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
     print("Total Goals found :",len(result_maze_obj.goals))
     result_maze_obj.pretty_print_maze()
-    result_maze_obj.print_goal_paths()
+    #result_maze_obj.print_goal_paths()
 
 
 

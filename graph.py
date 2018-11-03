@@ -2,7 +2,11 @@ import queue
 from time import sleep
 import copy
 
+
 class Node :
+    """
+
+    """
 
     def __init__(self,in_x=0,in_y=0):
         self.x = in_x
@@ -13,6 +17,7 @@ class Node :
         self.added = False
 
         self.parent = None
+        self.depth = 0
 
     def __str__(self):
         return str((self.x,self.y,self.data))
@@ -74,22 +79,21 @@ class Graph :
         input_str += "T" if d == True else "F"
 
         symbol_map = {"FFFF": '\u253c',
-                      "FFTT": '\u2502',
-                      "TTFF": '\u2500',
-                      "TTTF": '\u2534',
-                      "TTFT": '\u252c',
-                      "TFTT": '\u251c',
-                      "FTTT": '\u2524',
-                      "TFFT": '\u250c',
-                      "FTFT": '\u2510',
-                      "TFTF": '\u2514',
-                      "FTTF": '\u2518',
-                      "FTFF": '\u2574',
-                      "FFTF": '\u2575',
-                      "TFFF": '\u2576',
-                      "FFFT": '\u2577',
-                      "TTTT": ' '
-                      }
+                      "TTFF": '\u2502',
+                      "FFTT": '\u2500',
+                      "FFFT": '\u2534',
+                      "FFTF": '\u252c',
+                      "FTFF": '\u251c',
+                      "TFFF": '\u2524',
+                      "FTTF": '\u250c',
+                      "TFTF": '\u2510',
+                      "FTFT": '\u2514',
+                      "TFFT": '\u2518',
+                      "TFTT": '\u2574',
+                      "TTFT": '\u2575',
+                      "FTTT": '\u2576',
+                      "TTTF": '\u2577',
+                      "TTTT" : ' '}
 
         return symbol_map[input_str]
 
