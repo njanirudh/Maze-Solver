@@ -25,7 +25,7 @@ class Graph :
     def __init__(self , gr = None , start = None):
         self.graph_map = gr
         self.start_node = start
-        self.goals = list
+        self.goals = []
 
     def create_maze_array(self,path):
         '''
