@@ -1,5 +1,6 @@
 import queue
 from time import sleep
+import copy
 
 class Node :
 
@@ -98,6 +99,22 @@ class Graph :
             for node in node_array:
                 print(node.__data__(), end="")
             print()
+        print()
+
+    def print_goal_paths(self):
+
+        for count,goal_node in enumerate(self.goals):
+
+            temp_maze = copy.deepcopy(self)
+            curr = temp_maze.get_maze_array()[goal_node.y][goal_node.x]
+            while curr.parent != None:
+                curr.data = "X"
+                curr = curr.parent
+
+            print("Goal : ",count+1)
+            temp_maze.pretty_print_maze()
+
+
 
 
 if __name__ == "__main__":

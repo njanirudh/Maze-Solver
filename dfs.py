@@ -81,5 +81,5 @@ if __name__ == "__main__":
     result_maze_obj = maze
     run_dfs_on_maze(maze, start_pnt,result_maze_obj)
 
-    print(len(result_maze_obj.goals))
     result_maze_obj.pretty_print_maze()
+    result_maze_obj.print_goal_paths()
