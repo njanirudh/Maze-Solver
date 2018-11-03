@@ -22,9 +22,9 @@ class Node :
 
 class Graph :
 
-    def __init__(self):
-        self.graph_map = None
-        self.start_node = None
+    def __init__(self , gr = None , start = None):
+        self.graph_map = gr
+        self.start_node = start
         self.goals = list
 
     def create_maze_array(self,path):
@@ -47,6 +47,9 @@ class Graph :
         self.graph_map = node_maze
 
 
+    def get_maze_array(self):
+        return self.graph_map
+
     def get_start(self):
         '''
         Get the starting point of the node
@@ -61,7 +64,7 @@ class Graph :
 
         return Node(-1, -1)
 
-    def get_symbol(r, l, u, d):
+    def get_direction_symbol(self,r, l, u, d):
 
         input_str = ""
         input_str += "T" if r == True else "F"
@@ -83,7 +86,9 @@ class Graph :
                       "FTFF": '\u2574',
                       "FFTF": '\u2575',
                       "TFFF": '\u2576',
-                      "FFFT": '\u2577'}
+                      "FFFT": '\u2577',
+                      "TTTT": 'O'
+                      }
 
         return symbol_map[input_str]
 
