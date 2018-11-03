@@ -11,7 +11,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
     maze_array = maze_obj.get_maze_array()
     result_maze_array = maze.get_maze_array()
 
-    while(frontier_queue):
+    while not frontier_queue.empty():
         current_node = frontier_queue.get()
         current_node.visited = True
         current_node.added = True
