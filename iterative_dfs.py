@@ -1,5 +1,6 @@
 from graph import Graph
 from time import sleep
+import copy
 
 def run_iddfs_on_maze(maze_obj,start_pnt):
 
@@ -7,9 +8,10 @@ def run_iddfs_on_maze(maze_obj,start_pnt):
     start_pnt.depth = 0
 
     while True :
-        result = depth_limited_search(maze_obj, start_pnt, max_depth)
+        maze_test = copy.deepcopy(maze)
+        result = depth_limited_search(maze_test, start_pnt, max_depth)
         result.pretty_print_maze()
-        #sleep(0.5)
+        #sleep(5)
         max_depth += 1
 
 def depth_limited_search(maze_obj,start_pnt , max_depth):
@@ -18,7 +20,7 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
     frontier_stack.append(start_pnt)
 
     maze_array = maze_obj.get_maze_array()
-    result_maze_obj = maze_obj
+    result_maze_obj = copy.deepcopy(maze_obj)
     result_maze_array = result_maze_obj.get_maze_array()
 
     print(max_depth)
@@ -27,7 +29,9 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
         current_node = frontier_stack.pop()
         current_node.visited = True
         current_node.added = True
-        current_node.data = "0"
+
+        if(current_node.data == "*"):
+            result_maze_obj.goals.append(current_node)
 
         result_maze_array[current_node.y][current_node.x] = current_node
 
@@ -49,6 +53,10 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
                     if(max_depth >= right_node.depth):
                         frontier_stack.append(right_node)
 
+            else:
+                right_node.visited = True
+                right_node.added = True
+
         if (current_node.x != 0):
             left_node = maze_array[current_node.y][current_node.x - 1]
             left_node_value = left_node.data
@@ -61,6 +69,10 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
 
                     if(max_depth >= left_node.depth):
                         frontier_stack.append(left_node)
+
+            else:
+                left_node.visited = True
+                left_node.added = True
 
         if (current_node.y != 0):
             up_node = maze_array[current_node.y - 1][current_node.x]
@@ -75,6 +87,10 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
                     if(max_depth >= up_node.depth):
                         frontier_stack.append(up_node)
 
+            else:
+                up_node.visited = True
+                up_node.added = True
+
         if (current_node.y != (len(maze_array) - 1)):
             down_node = maze_array[current_node.y + 1][current_node.x]
             down_node_value = down_node.data
@@ -87,11 +103,15 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
 
                     if(max_depth >= down_node.depth):
                         frontier_stack.append(down_node)
+            else:
+                down_node.visited = True
+                down_node.added = True
 
-        # current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
-        #                                                       left_node.visited,
-        #                                                       up_node.visited,
-        #                                                       down_node.visited))
+
+        current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
+                                                              left_node.visited,
+                                                              up_node.visited,
+                                                              down_node.visited))
 
         result_maze_array[current_node.y][current_node.x] = current_node
 
@@ -107,3 +127,4 @@ if __name__ == "__main__":
 
     start_pnt = maze.get_start()
     run_iddfs_on_maze(maze, start_pnt)
+    maze.print_goal_paths()
