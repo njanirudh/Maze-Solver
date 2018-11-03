@@ -88,7 +88,7 @@ class Graph :
                       "FFTF": '\u2575',
                       "TFFF": '\u2576',
                       "FFFT": '\u2577',
-                      "TTTT": 'O'
+                      "TTTT": ' '
                       }
 
         return symbol_map[input_str]
@@ -113,8 +113,6 @@ class Graph :
 
             print("Goal : ",count+1)
             temp_maze.pretty_print_maze()
-
-
 
 
 if __name__ == "__main__":

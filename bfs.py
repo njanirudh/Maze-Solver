@@ -36,6 +36,9 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                     right_node.added = True
                     right_node.parent = current_node
                     frontier_queue.put(right_node)
+            else:
+                right_node.visited = True
+                right_node.added = True
 
         if(current_node.x != 0):
             left_node = maze_array[ current_node.y][current_node.x - 1 ]
@@ -46,6 +49,9 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                     left_node.added = True
                     left_node.parent = current_node
                     frontier_queue.put(left_node)
+            else:
+                left_node.visited = True
+                left_node.added = True
 
         if (current_node.y != 0):
             up_node = maze_array[ current_node.y - 1][current_node.x ]
@@ -56,6 +62,9 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                     up_node.added = True
                     up_node.parent = current_node
                     frontier_queue.put(up_node)
+            else:
+                up_node.visited = True
+                up_node.added = True
 
         if(current_node.y != (len(maze_array)-1)):
             down_node = maze_array[ current_node.y + 1][current_node.x ]
@@ -66,6 +75,9 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                     down_node.added = True
                     down_node.parent = current_node
                     frontier_queue.put(down_node)
+            else:
+                down_node.visited = True
+                down_node.added = True
 
         current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
                                            left_node.visited,
@@ -73,7 +85,6 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                                            down_node.visited))
 
         result_maze_array[current_node.y][current_node.x]=current_node
-        #Graph(result_maze_array).pretty_print_maze()
 
     return result_maze_obj
 
@@ -81,16 +92,16 @@ def run_bfs_on_maze(maze_obj,start_pnt):
 if __name__ == "__main__":
 
     file_path = "maps/map3.txt"
+
     maze = Graph()
     maze.create_maze_array(file_path)
-
     start_pnt = maze.get_start()
-    result_maze = run_bfs_on_maze(maze,start_pnt)
 
-    print(len(result_maze.goals))
-    result_maze.pretty_print_maze()
+    result_maze_obj = run_bfs_on_maze(maze,start_pnt)
 
-    result_maze.print_goal_paths()
+    print("Total Goals found :",len(result_maze_obj.goals))
+    result_maze_obj.pretty_print_maze()
+    result_maze_obj.print_goal_paths()
 
 
 
