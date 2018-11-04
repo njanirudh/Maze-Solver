@@ -3,7 +3,12 @@ from graph import Graph
 from time import sleep
 
 def run_bfs_on_maze(maze_obj,start_pnt):
-
+    """
+    BFS using queue
+    :param maze_obj: Maze model in the form of a grpah
+    :param start_pnt: Starting point in the graph model
+    :return: Result model with path symbols
+    """
     frontier_queue = queue.Queue()
     frontier_queue.put(start_pnt)
 

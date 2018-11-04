@@ -3,18 +3,32 @@ from time import sleep
 import copy
 
 def run_iddfs_on_maze(maze_obj,start_pnt):
-
+    """
+    Iterative deepening function
+    """
     max_depth = 0
     start_pnt.depth = 0
 
     while True :
+
+        if max_depth == 600:
+            break
+
         maze_test = copy.deepcopy(maze)
         result = depth_limited_search(maze_test, start_pnt, max_depth)
         result.pretty_print_maze()
         max_depth += 1
 
-def depth_limited_search(maze_obj,start_pnt , max_depth):
 
+
+def depth_limited_search(maze_obj,start_pnt , max_depth):
+    """
+    Depth  Limited Search using stack as the main data structure
+    :param maze_obj: Graph object created from the text maze
+    :param start_pnt: The starting point from the maze
+    :param max_depth: The maximum depth to run the DFS
+    :return: Result Graph data structure with the direction
+    """
     frontier_stack = []
     frontier_stack.append(start_pnt)
 
@@ -47,6 +61,8 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
                 if right_node.added is False and right_node.visited is False:
                     right_node.added = True
                     right_node.parent = current_node
+                    right_node.parent_direction = "Left"
+
                     right_node.depth = right_node.parent.depth + 1
 
                     if(max_depth >= right_node.depth):
@@ -64,6 +80,8 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
                 if left_node.added is False and left_node.visited is False:
                     left_node.added = True
                     left_node.parent = current_node
+                    left_node.parent_direction = "Right"
+
                     left_node.depth = left_node.parent.depth + 1
 
                     if(max_depth >= left_node.depth):
@@ -82,6 +100,7 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
                     up_node.added = True
                     up_node.parent = current_node
                     up_node.depth = up_node.parent.depth + 1
+                    up_node.parent_direction = "Down"
 
                     if(max_depth >= up_node.depth):
                         frontier_stack.append(up_node)
@@ -99,6 +118,7 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
                     down_node.added = True
                     down_node.parent = current_node
                     down_node.depth = down_node.parent.depth + 1
+                    down_node.parent_direction = "Up"
 
                     if(max_depth >= down_node.depth):
                         frontier_stack.append(down_node)
@@ -106,6 +126,19 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
                 down_node.visited = True
                 down_node.added = True
 
+
+        # Logic to check the direction of the parent
+        if (current_node.parent_direction == "Up"):
+            up_node.visited = False
+
+        elif (current_node.parent_direction == "Down"):
+            down_node.visited = False
+
+        elif (current_node.parent_direction == "Left"):
+            left_node.visited = False
+
+        elif (current_node.parent_direction == "Right"):
+            right_node.visited = False
 
         current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
                                                               left_node.visited,
