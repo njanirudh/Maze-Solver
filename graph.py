@@ -2,12 +2,10 @@ import queue
 from time import sleep
 import copy
 
-
 class Node :
     """
-
+    Node class to store each vortex of the graph
     """
-
     def __init__(self,in_x=0,in_y=0):
         self.x = in_x
         self.y = in_y
@@ -17,7 +15,9 @@ class Node :
         self.added = False
 
         self.parent = None
+        self.parent_direction = None
         self.depth = 0
+
 
     def __str__(self):
         return str((self.x,self.y,self.data))
@@ -27,7 +27,9 @@ class Node :
 
 
 class Graph :
-
+    """
+    Graph Class: Used to create , store and print the graph object created from the map
+    """
     def __init__(self , gr = None , start = None):
         self.graph_map = gr
         self.start_node = start
@@ -35,6 +37,7 @@ class Graph :
 
     def create_maze_array(self,path):
         '''
+        Converts text map into a graph data structure.
         :param path: file path of text file representation of maze
         :return: array representation of the maze
         '''
@@ -58,11 +61,10 @@ class Graph :
 
     def get_start(self):
         '''
-        Get the starting point of the node
+        Get the starting point of the graph
         :param input:
         :return:
         '''
-
         for i, row in enumerate(self.graph_map):
             for j, value in enumerate(row):
                 if (value.data == "s"):
@@ -71,7 +73,10 @@ class Graph :
         return Node(-1, -1)
 
     def get_direction_symbol(self,r, l, u, d):
-
+        """
+        Get the relevant symbol depending on the direction of the parent and unvisited sides
+        :return: Unicode symbol
+        """
         input_str = ""
         input_str += "T" if r == True else "F"
         input_str += "T" if l == True else "F"
@@ -93,12 +98,15 @@ class Graph :
                       "TTFT": '\u2575',
                       "FTTT": '\u2576',
                       "TTTF": '\u2577',
-                      "TTTT" : ' '}
+                      }
 
         return symbol_map[input_str]
 
     def pretty_print_maze(self):
-
+        """
+        Function to print the formatted maze
+        :return: None
+        """
         for node_array in self.graph_map:
             for node in node_array:
                 print(node.__data__(), end="")
@@ -106,7 +114,10 @@ class Graph :
         print()
 
     def print_goal_paths(self):
-
+        """
+        Prints the individual goal paths
+        :return: None
+        """
         for count,goal_node in enumerate(self.goals):
 
             temp_maze = copy.deepcopy(self)

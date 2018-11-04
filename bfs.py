@@ -34,6 +34,8 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                 if right_node.added is False and right_node.visited is False:
                     right_node.added = True
                     right_node.parent = current_node
+                    right_node.parent_direction = "Left"
+
                     frontier_queue.put(right_node)
             else:
                 right_node.visited = True
@@ -47,6 +49,8 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                 if left_node.added is False and left_node.visited is False:
                     left_node.added = True
                     left_node.parent = current_node
+                    left_node.parent_direction = "Right"
+
                     frontier_queue.put(left_node)
             else:
                 left_node.visited = True
@@ -60,6 +64,8 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                 if up_node.added is False and up_node.visited is False:
                     up_node.added = True
                     up_node.parent = current_node
+                    up_node.parent_direction = "Down"
+
                     frontier_queue.put(up_node)
             else:
                 up_node.visited = True
@@ -73,10 +79,25 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                 if down_node.added is False  and down_node.visited is False:
                     down_node.added = True
                     down_node.parent = current_node
+                    down_node.parent_direction = "Up"
+
                     frontier_queue.put(down_node)
             else:
                 down_node.visited = True
                 down_node.added = True
+
+        ## Logic to check the direction of the parent
+        if (current_node.parent_direction == "Up"):
+            up_node.visited = False
+
+        elif (current_node.parent_direction == "Down"):
+            down_node.visited = False
+
+        elif (current_node.parent_direction == "Left"):
+            left_node.visited = False
+
+        elif (current_node.parent_direction == "Right"):
+            right_node.visited = False
 
         current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
                                            left_node.visited,
