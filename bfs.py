@@ -85,6 +85,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
 
         result_maze_array[current_node.y][current_node.x]=current_node
         result_maze_obj.pretty_print_maze()
+        sleep(0.5)
 
     return result_maze_obj
 
@@ -101,7 +102,7 @@ if __name__ == "__main__":
 
     print("Total Goals found :",len(result_maze_obj.goals))
     result_maze_obj.pretty_print_maze()
-    #result_maze_obj.print_goal_paths()
+    result_maze_obj.print_goal_paths()
 
 
 
