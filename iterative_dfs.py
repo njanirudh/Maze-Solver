@@ -36,7 +36,6 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
     result_maze_obj = copy.deepcopy(maze_obj)
     result_maze_array = result_maze_obj.get_maze_array()
 
-    print(max_depth)
     while frontier_stack :
 
         current_node = frontier_stack.pop()
@@ -152,7 +151,7 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
 
 if __name__ == "__main__":
 
-    file_path = "maps/map3.txt"
+    file_path = "maps/map1.txt"
 
     maze = Graph()
     maze.create_maze_array(file_path)

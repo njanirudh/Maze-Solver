@@ -46,6 +46,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                 right_node.visited = True
                 right_node.added = True
 
+
         if(current_node.x != 0):
             left_node = maze_array[ current_node.y][current_node.x - 1 ]
             left_node_value = left_node.data
@@ -60,6 +61,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
             else:
                 left_node.visited = True
                 left_node.added = True
+
 
         if (current_node.y != 0):
             up_node = maze_array[ current_node.y - 1][current_node.x ]
@@ -76,6 +78,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                 up_node.visited = True
                 up_node.added = True
 
+
         if(current_node.y != (len(maze_array)-1)):
             down_node = maze_array[ current_node.y + 1][current_node.x ]
             down_node_value  = down_node.data
@@ -90,6 +93,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
             else:
                 down_node.visited = True
                 down_node.added = True
+
 
         ## Logic to check the direction of the parent
         if (current_node.parent_direction == "Up"):
@@ -110,8 +114,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
                                            down_node.visited))
 
         result_maze_array[current_node.y][current_node.x]=current_node
-        result_maze_obj.pretty_print_maze()
-        sleep(0.5)
+        #result_maze_obj.pretty_print_maze()
 
     return result_maze_obj
 

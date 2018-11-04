@@ -30,16 +30,17 @@ class Graph :
     """
     Graph Class: Used to create , store and print the graph object created from the map
     """
+
     def __init__(self , gr = None , start = None):
-        self.graph_map = gr
-        self.start_node = start
-        self.goals = []
+        self.graph_map = gr  #Stores the text map as array of Nodes
+        self.start_node = start # Stores the start point node
+        self.goals = [] # Stores the goal nodes
 
     def create_maze_array(self,path):
         '''
         Converts text map into a graph data structure.
         :param path: file path of text file representation of maze
-        :return: array representation of the maze
+        :return: None
         '''
         text = open(path, "r")
         maze_array = [i.strip() for i in text]
@@ -57,7 +58,12 @@ class Graph :
 
 
     def get_maze_array(self):
+        """
+        Returns the graph object array
+        :return: array of nodes
+        """
         return self.graph_map
+
 
     def get_start(self):
         '''
@@ -74,7 +80,7 @@ class Graph :
 
     def get_direction_symbol(self,r, l, u, d):
         """
-        Get the relevant symbol depending on the direction of the parent and unvisited sides
+        Get the relevant symbol depending on the direction of the parent and unvisited children
         :return: Unicode symbol
         """
         input_str = ""
@@ -102,6 +108,7 @@ class Graph :
 
         return symbol_map[input_str]
 
+
     def pretty_print_maze(self):
         """
         Function to print the formatted maze
@@ -113,6 +120,8 @@ class Graph :
             print()
         print()
 
+
+
     def print_goal_paths(self):
         """
         Prints the individual goal paths
@@ -123,7 +132,7 @@ class Graph :
             temp_maze = copy.deepcopy(self)
             curr = temp_maze.get_maze_array()[goal_node.y][goal_node.x]
             while curr.parent != None:
-                curr.data = "X"
+                curr.data = "0"
                 curr = curr.parent
 
             print("Goal : ",count+1)
