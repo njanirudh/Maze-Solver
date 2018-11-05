@@ -121,7 +121,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
 
 if __name__ == "__main__":
 
-    file_path = "maps/map1.txt"
+    file_path = "maps/map3.txt"
 
     maze = Graph()
     maze.create_maze_array(file_path)

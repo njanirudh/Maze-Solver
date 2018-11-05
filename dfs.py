@@ -12,6 +12,7 @@ def run_dfs_on_maze(maze_obj,start_pnt,result_maze_obj):
     """
     current_node = start_pnt
     current_node.visited = True
+    current_node.added = True
 
     maze_array = maze_obj.get_maze_array()
     result_maze_array = result_maze_obj.get_maze_array()
@@ -109,9 +110,11 @@ def run_dfs_on_maze(maze_obj,start_pnt,result_maze_obj):
 
 if __name__ == "__main__":
 
-    file_path = "maps/map1.txt"
+    file_path = "maps/map3.txt"
     maze = Graph()
     maze.create_maze_array(file_path)
+    print("Maze Array : ")
+    maze.pretty_print_maze()
 
     start_pnt = maze.get_start()
 

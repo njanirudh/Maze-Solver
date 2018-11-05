@@ -103,11 +103,17 @@ class Graph :
                       "TFTT": '\u2574',
                       "TTFT": '\u2575',
                       "FTTT": '\u2576',
-                      "TTTF": '\u2577',
+                      "TTTF": '\u2577'
                       }
 
         return symbol_map[input_str]
 
+    def get_goal_points(self):
+        """
+        Returns the goal nodes
+        :return: array of goal nodes
+        """
+        return self.goals
 
     def pretty_print_maze(self):
         """
@@ -132,7 +138,7 @@ class Graph :
             temp_maze = copy.deepcopy(self)
             curr = temp_maze.get_maze_array()[goal_node.y][goal_node.x]
             while curr.parent != None:
-                curr.data = "0"
+                curr.data = "*"
                 curr = curr.parent
 
             print("Goal : ",count+1)
