@@ -4,10 +4,10 @@ from time import sleep
 
 def run_bfs_on_maze(maze_obj,start_pnt):
     """
-    BFS using queue
-    :param maze_obj: Maze model in the form of a grpah
+    BFS using queue (FIFO)
+    :param maze_obj: Maze model in the form of a graph
     :param start_pnt: Starting point in the graph model
-    :return: Result model with path symbols
+    :return: Result maze model with traversed path
     """
     frontier_queue = queue.Queue()
     frontier_queue.put(start_pnt)
@@ -17,10 +17,12 @@ def run_bfs_on_maze(maze_obj,start_pnt):
     result_maze_array = result_maze_obj.get_maze_array()
 
     while not frontier_queue.empty():
+        # current_node refers to the node removed from queue and visited in the loop
         current_node = frontier_queue.get()
         current_node.visited = True
         current_node.added = True
 
+        # Storing the goal to the result
         if(current_node.data == "*"):
             result_maze_obj.goals.append(current_node)
 
@@ -30,6 +32,8 @@ def run_bfs_on_maze(maze_obj,start_pnt):
         left_node = None
         up_node = None
         down_node = None
+
+        ## Traversing all the four children of the current node
 
         if(current_node.x != (len(maze_array[0]))):
             right_node = maze_array[ current_node.y][current_node.x + 1 ]
@@ -108,6 +112,7 @@ def run_bfs_on_maze(maze_obj,start_pnt):
         elif (current_node.parent_direction == "Right"):
             right_node.visited = False
 
+        # Setting the unicode symbol depending on the path
         current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
                                            left_node.visited,
                                            up_node.visited,
@@ -123,12 +128,18 @@ if __name__ == "__main__":
 
     file_path = "maps/map3.txt"
 
+    # Creating graph object and creating maze from text file
     maze = Graph()
     maze.create_maze_array(file_path)
-    start_pnt = maze.get_start()
 
+    print("Maze Array : ")
+    maze.pretty_print_maze()
+
+    # Setting start point and running the bfs
+    start_pnt = maze.get_start()
     result_maze_obj = run_bfs_on_maze(maze,start_pnt)
 
+    # Printing final result and goal paths
     print("Total Goals found :",len(result_maze_obj.goals))
     result_maze_obj.pretty_print_maze()
     result_maze_obj.print_goal_paths()

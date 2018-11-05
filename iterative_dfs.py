@@ -8,6 +8,7 @@ def run_iddfs_on_maze(maze_obj,start_pnt):
     """
     max_depth = 0
     start_pnt.depth = 0
+    result = None
 
     while True :
 
@@ -16,14 +17,16 @@ def run_iddfs_on_maze(maze_obj,start_pnt):
 
         maze_test = copy.deepcopy(maze)
         result = depth_limited_search(maze_test, start_pnt, max_depth)
-        #result.pretty_print_maze()
         max_depth += 1
+
+    return result
 
 
 
 def depth_limited_search(maze_obj,start_pnt , max_depth):
     """
-    Depth  Limited Search using stack as the main data structure
+    Depth Limited Search using stack as the main data structure
+
     :param maze_obj: Graph object created from the text maze
     :param start_pnt: The starting point from the maze
     :param max_depth: The maximum depth to run the DFS
@@ -37,11 +40,12 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
     result_maze_array = result_maze_obj.get_maze_array()
 
     while frontier_stack :
-
+        # current_node refers to the node removed from queue and visited in the loop
         current_node = frontier_stack.pop()
         current_node.visited = True
         current_node.added = True
 
+        # Storing the goal to the result
         if(current_node.data == "*"):
             result_maze_obj.goals.append(current_node)
 
@@ -139,6 +143,7 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
         elif (current_node.parent_direction == "Right"):
             right_node.visited = False
 
+        # Setting the unicode symbol depending on the path
         current_node.data = str(maze_obj.get_direction_symbol(right_node.visited,
                                                               left_node.visited,
                                                               up_node.visited,
@@ -151,7 +156,7 @@ def depth_limited_search(maze_obj,start_pnt , max_depth):
 
 if __name__ == "__main__":
 
-    file_path = "maps/map1.txt"
+    file_path = "maps/map3.txt"
 
     maze = Graph()
     maze.create_maze_array(file_path)
@@ -159,5 +164,6 @@ if __name__ == "__main__":
     maze.pretty_print_maze()
 
     start_pnt = maze.get_start()
-    run_iddfs_on_maze(maze, start_pnt)
-    maze.print_goal_paths()
+    result = run_iddfs_on_maze(maze, start_pnt)
+    result.pretty_print_maze()
+    result.print_goal_paths()
