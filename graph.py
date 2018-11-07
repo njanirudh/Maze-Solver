@@ -4,7 +4,7 @@ import copy
 
 class Node :
     """
-    Node class to store each vortex of the graph
+    Node class to store each vertex of the graph
     """
     def __init__(self,in_x=0,in_y=0):
         self.x = in_x

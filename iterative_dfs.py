@@ -9,9 +9,12 @@ def run_iddfs_on_maze(maze_obj,start_pnt):
     max_depth = 0
     start_pnt.depth = 0
     result = None
-
+ 
     while True :
 
+    # Maximum depth can be found using DFS and then can be set instead of using hardcoded values.
+    # We can also keep track of the total number of nodes in the maze and break the outer while loop when 
+    # all the nodes are visited.
         if max_depth == 600:
             break
 
